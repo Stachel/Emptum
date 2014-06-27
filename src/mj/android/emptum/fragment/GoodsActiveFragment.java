@@ -34,7 +34,7 @@ public class GoodsActiveFragment extends Fragment {
 	}
 
 	public GoodsActiveFragment() {
-		_goodsList = GoodsList.getInstance();
+		_goodsList = GoodsList.getInstance(getActivity());
 	}
 
 	@Override
@@ -42,6 +42,9 @@ public class GoodsActiveFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_goods_active, container, false);
 		_list = (ListView)rootView.findViewById(R.id.list);
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
+		
+		_list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
+				_goodsList.getGoodsBought()));
 		
 		Button btn_add = (Button)rootView.findViewById(R.id.btn_add);
 		btn_add.setOnClickListener(new OnClickListener() {
@@ -63,7 +66,10 @@ public class GoodsActiveFragment extends Fragment {
 	
 	private void addNewItem() {
 		String item = _edit.getText().toString();
+		_edit.setText(null);
 		_goodsList.addToActive(item);
+		_list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
+				_goodsList.getGoodsActive()));
 	}
 
 	private void startVoiceRecognitionActivity() {
