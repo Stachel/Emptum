@@ -2,9 +2,13 @@
 <resources>
 
     <string name="app_name">Emptum</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_need_to_buy">Надо купить</string>
+    <string name="title_already_bought">Уже куплено</string>
+    <string name="edit_new_hint">А еще мне надо&#8230;</string>
+    <string name="ok">Ок</string>
+    <string name="voice_hint">Произнесите название</string>
+    <string name="voice_not_recognized">Не удалось распознать текст</string>
+    
     <string name="action_settings">Settings</string>
 
 </resources>
