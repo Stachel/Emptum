@@ -12,6 +12,9 @@ import android.content.Context;
 
 public class GoodsList {
 	
+	public static final int TYPE_NEED_TO_BUY = 0;
+	public static final int TYPE_ALREADY_BOUGHT = 1;
+	
 	private static GoodsList _instance;
 	private ArrayList<String> _goodsActive;
 	private ArrayList<String> _goodsBought;

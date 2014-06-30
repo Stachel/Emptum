@@ -3,17 +3,19 @@ package mj.android.emptum.fragment;
 import java.util.ArrayList;
 
 import mj.android.emptum.R;
+import mj.android.emptum.adapter.EmptumListAdapter;
 import mj.android.emptum.data.GoodsList;
+import mj.android.emptum.service.OnTouchRightDrawableListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,6 +27,8 @@ public class GoodsActiveFragment extends Fragment {
 	
 	private ListView _list;
 	private EditText _edit;
+	
+	private EmptumListAdapter _adapter;
 	
 	private static final int REQUEST_CODE = 0;
 
@@ -43,9 +47,16 @@ public class GoodsActiveFragment extends Fragment {
 		_list = (ListView)rootView.findViewById(R.id.list);
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
 		
-		_list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
-				_goodsList.getGoodsBought()));
-		
+		_adapter = new EmptumListAdapter(GoodsList.TYPE_NEED_TO_BUY, getActivity());
+		_list.setAdapter(_adapter);
+				
+		_edit.setOnTouchListener(new OnTouchRightDrawableListener(_edit) {
+			@Override
+			public boolean onDrawableTouch(MotionEvent event) {
+				startVoiceRecognitionActivity();
+				return true;
+			}
+		});
 		Button btn_add = (Button)rootView.findViewById(R.id.btn_add);
 		btn_add.setOnClickListener(new OnClickListener() {
 			@Override
@@ -53,14 +64,7 @@ public class GoodsActiveFragment extends Fragment {
 				addNewItem();
 			}
 		});
-		
-		Button btn_voice = (Button)rootView.findViewById(R.id.btn_voice);
-		btn_voice.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startVoiceRecognitionActivity();
-			}
-		});
+
 		return rootView;
 	}
 	
@@ -68,8 +72,7 @@ public class GoodsActiveFragment extends Fragment {
 		String item = _edit.getText().toString();
 		_edit.setText(null);
 		_goodsList.addToActive(item);
-		_list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
-				_goodsList.getGoodsActive()));
+		_adapter.notifyDataSetChanged();
 	}
 
 	private void startVoiceRecognitionActivity() {
@@ -89,8 +92,6 @@ public class GoodsActiveFragment extends Fragment {
 			} else {
 				Toast.makeText(getActivity(), getString(R.string.voice_not_recognized), Toast.LENGTH_SHORT).show();
 			}
-			_list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
-                    matches));
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
