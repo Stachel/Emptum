@@ -1,10 +1,14 @@
 package mj.android.emptum.fragment;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import mj.android.emptum.R;
+import mj.android.emptum.adapter.ActiveListAdapter;
 import mj.android.emptum.adapter.EmptumListAdapter;
+import mj.android.emptum.adapter.EmptumListAdapter.OnItemStateChangedListener;
 import mj.android.emptum.data.GoodsList;
+import mj.android.emptum.data.Item;
 import mj.android.emptum.service.OnTouchRightDrawableListener;
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +35,20 @@ public class GoodsActiveFragment extends Fragment {
 	private EmptumListAdapter _adapter;
 	
 	private static final int REQUEST_CODE = 0;
-
+	
+	OnItemStateChangedListener _listenerStateChanged = new OnItemStateChangedListener() {
+		@Override
+		public void itemStateChanged(UUID id) {
+			Item item = _goodsList.getFromActive(id);
+			if (item != null) {
+				item.setMarked(true);
+				_goodsList.removeFromActive(id);
+				_goodsList.addToBought(item);
+				_adapter.notifyDataSetChanged();
+			}
+		}
+	};
+	
 	public static GoodsActiveFragment newInstance() {
 		GoodsActiveFragment fragment = new GoodsActiveFragment();
 		return fragment;
@@ -40,14 +57,25 @@ public class GoodsActiveFragment extends Fragment {
 	public GoodsActiveFragment() {
 		_goodsList = GoodsList.getInstance(getActivity());
 	}
-
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+	    super.setUserVisibleHint(isVisibleToUser);
+	    if (isVisibleToUser) {
+	    	if (_adapter != null) {
+	    		_adapter.notifyDataSetChanged();
+	    	}
+	    }
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_goods_active, container, false);
 		_list = (ListView)rootView.findViewById(R.id.list);
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
 		
-		_adapter = new EmptumListAdapter(GoodsList.TYPE_NEED_TO_BUY, getActivity());
+		_adapter = new ActiveListAdapter(getActivity(), _goodsList.getGoodsActive());
+		_adapter.setOnItemStateChangedListener(_listenerStateChanged);
 		_list.setAdapter(_adapter);
 				
 		_edit.setOnTouchListener(new OnTouchRightDrawableListener(_edit) {
