@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import android.content.Context;
+import android.util.Log;
 
 public class GoodsList {
 	
@@ -125,5 +126,7 @@ public class GoodsList {
 		}
 		return null;
 	}
+	
+	
 	
 }

@@ -32,5 +32,4 @@ public class ActiveListAdapter extends EmptumListAdapter {
 		}
 		return null;
 	}
-
 }

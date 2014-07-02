@@ -7,17 +7,16 @@ import mj.android.emptum.R;
 import mj.android.emptum.data.Item;
 import android.content.Context;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public abstract class EmptumListAdapter extends BaseAdapter {
 	
@@ -65,22 +64,21 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 			convertView = (View) inflater.inflate(R.layout.list_row, null);
 		} 
 		
-		CheckBox title = (CheckBox)convertView.findViewById(R.id.title);
+		TextView title = (TextView)convertView.findViewById(R.id.title);
+		ImageView icon = (ImageView)convertView.findViewById(R.id.icon);
 		
 		final Item item = _list.get(position);
 		UUID id = item.getID();
 		boolean isMarked = item.isMarked();
 		
-		Log.e("MY", "item " + position + ": " + id + " - " + item.getName() + " - " + isMarked);
-		
 		title.setText(item.getName());
-		title.setChecked(isMarked);
+		icon.setBackgroundResource(getDrawable(isMarked));
 		setStrikeOutText(title, isMarked);
 		convertView.setAnimation(getAnimation(id, isMarked));
 		
-		title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		icon.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onClick(View v) {
 				item.switchMarked();
 				notifyDataSetChanged();
 			}
@@ -88,7 +86,7 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 		return convertView;
 	}
 	
-	protected void setStrikeOutText(CheckBox title, boolean isChecked) {
+	protected void setStrikeOutText(TextView title, boolean isChecked) {
 		int flag = title.getPaintFlags();
 		if (isChecked) {
 			flag = flag | Paint.STRIKE_THRU_TEXT_FLAG;
@@ -100,7 +98,7 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 	
 	protected Animation getAnimForItem (final UUID id) {
 		Animation anim = AnimationUtils.loadAnimation(_context, getAnimResourceID());
-		anim.setStartOffset(1000);
+		//anim.setStartOffset(500);
 		anim.setAnimationListener(new AnimationListener() {
 			@Override
 			public void onAnimationStart(Animation animation) {
@@ -118,6 +116,11 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 			}
 		});
 		return anim;
+	}
+	
+	
+	protected int getDrawable(boolean isMarked) {
+		return isMarked ? R.drawable.check_on : R.drawable.check_off;
 	}
 	
 	@Override
