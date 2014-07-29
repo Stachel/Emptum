@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import mj.android.emptum.R;
-import mj.android.emptum.adapter.ActiveListAdapter;
-import mj.android.emptum.adapter.EmptumListAdapter;
-import mj.android.emptum.adapter.EmptumListAdapter.OnItemStateChangedListener;
+import mj.android.emptum.adapter.GoodsListAdapter;
+import mj.android.emptum.adapter.GoodsListAdapter.OnItemStateChangedListener;
 import mj.android.emptum.data.GoodsList;
 import mj.android.emptum.data.Item;
 import mj.android.emptum.service.OnTouchRightDrawableListener;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,47 +24,47 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class GoodsActiveFragment extends Fragment {
+public class GoodsListFragment extends Fragment {
 
 	private GoodsList _goodsList;
 	
 	private ListView _list;
 	private EditText _edit;
 	
-	private EmptumListAdapter _adapter;
+	private GoodsListAdapter _adapter;
 	
 	private static final int REQUEST_CODE = 0;
 	
 	OnItemStateChangedListener _listenerStateChanged = new OnItemStateChangedListener() {
 		@Override
 		public void itemStateChanged(UUID id) {
-			Item item = _goodsList.getFromActive(id);
+			Item item = _goodsList.getItem(id);
 			if (item != null) {
 				item.setMarked(true);
-				_goodsList.removeFromActive(id);
-				_goodsList.addToBought(item);
+				//_goodsList.remove(id);
+				//_goodsList.addToBought(item);
 				_adapter.notifyDataSetChanged();
 			}
 		}
 	};
 	
-	public static GoodsActiveFragment newInstance() {
-		GoodsActiveFragment fragment = new GoodsActiveFragment();
+	public static GoodsListFragment newInstance() {
+		GoodsListFragment fragment = new GoodsListFragment();
 		return fragment;
 	}
 
-	public GoodsActiveFragment() {
+	public GoodsListFragment() {
 		_goodsList = GoodsList.getInstance(getActivity());
 	}
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
-	    super.setUserVisibleHint(isVisibleToUser);
+	    /*super.setUserVisibleHint(isVisibleToUser);
 	    if (isVisibleToUser) {
 	    	if (_adapter != null) {
 	    		_adapter.notifyDataSetChanged();
 	    	}
-	    }
+	    }*/
 	}
 	
 	@Override
@@ -74,7 +73,7 @@ public class GoodsActiveFragment extends Fragment {
 		_list = (ListView)rootView.findViewById(R.id.list);
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
 		
-		_adapter = new ActiveListAdapter(getActivity(), _goodsList.getGoodsActive());
+		_adapter = new GoodsListAdapter(getActivity());
 		_adapter.setOnItemStateChangedListener(_listenerStateChanged);
 		_list.setAdapter(_adapter);
 				
@@ -99,7 +98,7 @@ public class GoodsActiveFragment extends Fragment {
 	private void addNewItem() {
 		String item = _edit.getText().toString();
 		_edit.setText(null);
-		_goodsList.addToActive(item);
+		_goodsList.add(item);
 		_adapter.notifyDataSetChanged();
 	}
 

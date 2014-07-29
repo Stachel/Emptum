@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import mj.android.emptum.R;
+import mj.android.emptum.data.GoodsList;
 import mj.android.emptum.data.Item;
 import android.content.Context;
 import android.graphics.Paint;
@@ -11,14 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public abstract class EmptumListAdapter extends BaseAdapter {
+public class GoodsListAdapter extends BaseAdapter {
 	
 	ArrayList<Item> _list;
 	protected Context _context;
@@ -28,7 +26,7 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 		public void itemStateChanged(UUID id);
 	}
 	
-	public EmptumListAdapter (Context ctx) {
+	public GoodsListAdapter (Context ctx) {
 		_context = ctx;
 		_list = getGoodsList();
 	}
@@ -37,9 +35,9 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 		_listenerItemStateChanged = listener;
 	}
 
-	abstract protected int getAnimResourceID();
-	abstract protected Animation getAnimation(UUID id, boolean isMarked);
-	abstract protected ArrayList<Item> getGoodsList();
+	protected ArrayList<Item> getGoodsList() {
+		return GoodsList.getInstance(_context).getGoodsList();
+	}
 
 	@Override
 	public int getCount() {
@@ -74,7 +72,6 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 		title.setText(item.getName());
 		icon.setBackgroundResource(getDrawable(isMarked));
 		setStrikeOutText(title, isMarked);
-		convertView.setAnimation(getAnimation(id, isMarked));
 		
 		icon.setOnClickListener(new OnClickListener() {
 			@Override
@@ -95,29 +92,6 @@ public abstract class EmptumListAdapter extends BaseAdapter {
 		}
 		title.setPaintFlags(flag);
 	}
-	
-	protected Animation getAnimForItem (final UUID id) {
-		Animation anim = AnimationUtils.loadAnimation(_context, getAnimResourceID());
-		//anim.setStartOffset(500);
-		anim.setAnimationListener(new AnimationListener() {
-			@Override
-			public void onAnimationStart(Animation animation) {
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-			}
-			
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				if (_listenerItemStateChanged != null) {
-					_listenerItemStateChanged.itemStateChanged(id);
-				}
-			}
-		});
-		return anim;
-	}
-	
 	
 	protected int getDrawable(boolean isMarked) {
 		return isMarked ? R.drawable.check_on : R.drawable.check_off;
