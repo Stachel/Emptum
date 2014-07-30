@@ -59,7 +59,7 @@ public class GoodsListAdapter extends BaseAdapter {
 		
 		LayoutInflater inflater = LayoutInflater.from(_context);
 		if (convertView == null) {
-			convertView = (View) inflater.inflate(R.layout.list_row, null);
+			convertView = (View) inflater.inflate(R.layout.item_goods_list, null);
 		} 
 		
 		TextView title = (TextView)convertView.findViewById(R.id.title);

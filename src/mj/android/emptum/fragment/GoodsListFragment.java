@@ -69,7 +69,7 @@ public class GoodsListFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_goods_active, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_goods_list, container, false);
 		_list = (ListView)rootView.findViewById(R.id.list);
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
 		

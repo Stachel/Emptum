@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import mj.android.emptum.R;
 import mj.android.emptum.menu.MenuItem;
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 public class MenuListAdapter extends BaseAdapter {
 	
@@ -50,9 +51,14 @@ public class MenuListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = LayoutInflater.from(_ctx);
 		if (convertView == null) {
-			convertView = (View) inflater.inflate(R.layout.list_row, null);
+			convertView = (View) inflater.inflate(R.layout.item_goods_list, null);
 		} 
 		
+		TextView title = (TextView)convertView.findViewById(R.id.title);
+		title.setText(_items.get(position).getName());
+		title.setBackgroundColor(Color.GRAY);
+		
+		return convertView;
 		/*
 		 String notSet = getString(R.string.not_set);
 			
@@ -128,7 +134,6 @@ public class MenuListAdapter extends BaseAdapter {
 			}
 			return convertView;
 		 */
-		return null;
 	}
 
 }
