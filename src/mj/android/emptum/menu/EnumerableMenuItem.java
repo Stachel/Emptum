@@ -1,6 +1,6 @@
 package mj.android.emptum.menu;
 
-import mj.android.emptum.filter.EnumerableFilter;
+import mj.android.emptum.filter.logic.EnumerableFilter;
 
 
 public class EnumerableMenuItem implements MenuItem {
@@ -25,5 +25,10 @@ public class EnumerableMenuItem implements MenuItem {
 	
 	public void setChecked() {
 		_filter.setValue(_id);
+	}
+	
+	@Override
+	public int getType() {
+		return TYPE_EBUMERABLE;
 	}
 }

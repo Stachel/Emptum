@@ -1,23 +1,20 @@
 package mj.android.emptum.filter;
 
+import mj.android.emptum.filter.logic.Filter;
 import android.content.Context;
 
 public class GoodsFilter {
 
 	private static GoodsFilter _instance;
-	
-	private static final String KEY_SORTING = "filter_key_sorting";
-	private static final String KEY_FILTERING = "filter_key_filtering";
-	private static final String KEY_SHIFTING = "filter_key_shifting";
-	
-	EnumerableFilter _sorting;
-	EnumerableFilter _filtering;
-	BooleanFilter _shifting;
+
+	SortFilter _sorting;
+	VisibleFilter _visible;
+	ShiftFilter _shift;
 	
 	private GoodsFilter(Context ctx) {
-		_sorting = new EnumerableFilter(ctx, KEY_SORTING);
-		_filtering = new EnumerableFilter(ctx, KEY_FILTERING);
-		_shifting = new BooleanFilter(ctx, KEY_SHIFTING);
+		_sorting = new SortFilter(ctx);
+		_visible = new VisibleFilter(ctx);
+		_shift = new ShiftFilter(ctx);
 	}
 	
 	public static GoodsFilter getInstance(Context ctx) {
@@ -27,15 +24,15 @@ public class GoodsFilter {
 		return _instance;
 	}
 	
-	public EnumerableFilter getSortingFilter() {
+	public SortFilter getSortingFilter() {
 		return _sorting;
 	}
 
-	public EnumerableFilter getFilteringFilter() {
-		return _filtering;
+	public VisibleFilter getVisibleFilter() {
+		return _visible;
 	}
 	
-	public BooleanFilter getShiftingFilter() {
-		return _shifting;
+	public ShiftFilter getShiftFilter() {
+		return _shift;
 	}
 }

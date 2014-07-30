@@ -24,4 +24,9 @@ public class GroupMenuItem implements MenuItem {
 	public ArrayList<MenuItem> getChilds () {
 		return _childs;
 	}
+
+	@Override
+	public int getType() {
+		return TYPE_GROUP;
+	}
 }

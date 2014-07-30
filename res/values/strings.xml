@@ -15,27 +15,15 @@
     <string name="drawer_close">Close</string>
     
     <string name="menu_group_sorting">Сортировка</string>
-    <string name="menu_group_filtering">Фильтр</string>
+    <string name="menu_group_visible">Фильтр</string>
     <string name="menu_group_other">Другое</string>
     
     <string name="menu_sort_alphabet">по алфавиту</string>
     <string name="menu_sort_date">по дате</string>
-    <string name="menu_filter_all">Все</string>
-    <string name="menu_filter_active">Надо купить</string>
-    <string name="menu_filter_bought">Купленное</string>
+    <string name="menu_visible_all">Все</string>
+    <string name="menu_visible_active">Надо купить</string>
+    <string name="menu_visible_bought">Купленное</string>
     <string name="menu_shifing">Купленное вниз</string>
     <string name="menu_delete_all">Удалить все</string>
     <string name="menu_delete_bought">Удалить купленное</string>
-    
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
-
 </resources>

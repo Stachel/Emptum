@@ -17,4 +17,9 @@ public class ActionMenuItem implements MenuItem {
 	public String getName() {
 		return _name;
 	}
+	
+	@Override
+	public int getType() {
+		return TYPE_ACTION;
+	}
 }

@@ -1,4 +1,4 @@
-package mj.android.emptum.filter;
+package mj.android.emptum.filter.logic;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,16 +33,37 @@ public class FilterStore {
 	
 	public static int readInteger (Context ctx, String key) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-		return prefs.getInt(key, 0);
+		try {
+			return prefs.getInt(key, 0);
+		} catch (ClassCastException e) {
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.remove(key);
+			editor.commit();
+		}
+		return 0;
 	}
 	
 	public static String readString (Context ctx, String key) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-		return prefs.getString(key, null);
+		try {
+			return prefs.getString(key, null);
+		} catch (ClassCastException e) {
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.remove(key);
+			editor.commit();
+		}
+		return null;
 	}
 	
 	public static boolean readBoolean (Context ctx, String key) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-		return prefs.getBoolean(key, false);
+		try {
+			return prefs.getBoolean(key, false);
+		} catch (ClassCastException e) {
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.remove(key);
+			editor.commit();
+		}
+		return false;		
 	}
 }

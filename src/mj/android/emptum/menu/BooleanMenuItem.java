@@ -1,6 +1,6 @@
 package mj.android.emptum.menu;
 
-import mj.android.emptum.filter.BooleanFilter;
+import mj.android.emptum.filter.logic.BooleanFilter;
 
 public class BooleanMenuItem implements MenuItem {
 	private String _name;
@@ -22,5 +22,10 @@ public class BooleanMenuItem implements MenuItem {
 	
 	public void setChecked(boolean isChecked) {
 		_filter.setValue(isChecked);
-	}	
+	}
+	
+	@Override
+	public int getType() {
+		return TYPE_BOOLEAN;
+	}
 }
