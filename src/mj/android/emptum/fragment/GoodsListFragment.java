@@ -14,10 +14,12 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,9 +42,7 @@ public class GoodsListFragment extends Fragment {
 		public void itemStateChanged(UUID id) {
 			Item item = _goodsList.getItem(id);
 			if (item != null) {
-				item.setMarked(true);
-				//_goodsList.remove(id);
-				//_goodsList.addToBought(item);
+				item.switchMarked();
 				_adapter.notifyDataSetChanged();
 			}
 		}
@@ -58,25 +58,25 @@ public class GoodsListFragment extends Fragment {
 	}
 	
 	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-	    /*super.setUserVisibleHint(isVisibleToUser);
-	    if (isVisibleToUser) {
-	    	if (_adapter != null) {
-	    		_adapter.notifyDataSetChanged();
-	    	}
-	    }*/
-	}
-	
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_goods_list, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_goods, container, false);
 		_list = (ListView)rootView.findViewById(R.id.list);
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
 		
 		_adapter = new GoodsListAdapter(getActivity());
 		_adapter.setOnItemStateChangedListener(_listenerStateChanged);
 		_list.setAdapter(_adapter);
-				
+			
+		_edit.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					addNewItem();
+					return true;
+				}
+				return false;
+			}
+		});
 		_edit.setOnTouchListener(new OnTouchRightDrawableListener(_edit) {
 			@Override
 			public boolean onDrawableTouch(MotionEvent event) {
@@ -97,8 +97,11 @@ public class GoodsListFragment extends Fragment {
 	
 	private void addNewItem() {
 		String item = _edit.getText().toString();
+		if (item == null || item.trim().length() == 0) {
+			return;
+		}
 		_edit.setText(null);
-		_goodsList.add(item);
+		_goodsList.add(item.trim());
 		_adapter.notifyDataSetChanged();
 	}
 
@@ -122,4 +125,8 @@ public class GoodsListFragment extends Fragment {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+	public void notifyListChanged() {
+		_adapter.notifyDataSetChanged();
+	}
 }

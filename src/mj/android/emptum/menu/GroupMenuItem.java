@@ -2,6 +2,11 @@ package mj.android.emptum.menu;
 
 import java.util.ArrayList;
 
+import mj.android.emptum.R;
+
+import android.view.View;
+import android.widget.TextView;
+
 public class GroupMenuItem implements MenuItem {
 	
 	private String _name;
@@ -28,5 +33,21 @@ public class GroupMenuItem implements MenuItem {
 	@Override
 	public int getType() {
 		return TYPE_GROUP;
+	}
+
+	@Override
+	public void onItemClick() {
+		return;
+	}
+
+	@Override
+	public void fillView(View convertView) {
+		TextView text = (TextView)convertView.findViewById(android.R.id.text1);
+		text.setText(getName());
+	}
+
+	@Override
+	public int getLayoutResourceID() {
+		return R.layout.item_menu_group;
 	}
 }

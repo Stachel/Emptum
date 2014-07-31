@@ -2,15 +2,14 @@ package mj.android.emptum.adapter;
 
 import java.util.ArrayList;
 
-import mj.android.emptum.R;
+import mj.android.emptum.menu.GroupMenuItem;
 import mj.android.emptum.menu.MenuItem;
 import android.content.Context;
-import android.graphics.Color;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 public class MenuListAdapter extends BaseAdapter {
 	
@@ -46,94 +45,26 @@ public class MenuListAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	@Override
+	public boolean isEnabled(int position) {
+		return !(_items.get(position) instanceof GroupMenuItem);
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		final Context contextThemeWrapper = new ContextThemeWrapper(_ctx, android.R.style.Theme_Holo);
 		LayoutInflater inflater = LayoutInflater.from(_ctx);
+		inflater = inflater.cloneInContext(contextThemeWrapper);
+		
+		MenuItem item = getItem(position);
+		
 		if (convertView == null) {
-			convertView = (View) inflater.inflate(R.layout.item_goods_list, null);
-		} 
-		
-		TextView title = (TextView)convertView.findViewById(R.id.title);
-		title.setText(_items.get(position).getName());
-		title.setBackgroundColor(Color.GRAY);
-		
+			convertView = (View) inflater.inflate(item.getLayoutResourceID(), null);
+		}
+		item.fillView(convertView);
+
 		return convertView;
-		/*
-		 String notSet = getString(R.string.not_set);
-			
-			Filter filter = getItem(position);
-			Object value = filter.getValue();
-			
-			//TODO maybe some inherited methods?
-			switch (getItemViewType(position)) {
-				case Filter.AttributeFilter: 
-					if (convertView == null) {
-						convertView = _inflater.inflate(R.layout.row_filter_attribute, null);
-					}
-					TextView attrHeader = (TextView) convertView.findViewById(R.id.attr_header);
-		    		TextView attrTitle = (TextView) convertView.findViewById(R.id.attr_value1);
-		    		TextView attrValue = (TextView) convertView.findViewById(R.id.attr_value2);
-		    		
-		    		attrHeader.setText(filter.getName());
-		    				    		
-		    		IValue a = ((AttributeFilter)filter).getAttribute();
-					IValue av = ((AttributeFilter)filter).getAttributeValue();
-					if (a == null) {
-						attrTitle.setText(notSet);
-						attrValue.setText("");
-					} else {
-						attrTitle.setText(a.name());
-						attrValue.setText(av == null ? notSet : av.name());
-					}
-					break;
-					
-				case Filter.BooleanFilter: 
-					if (convertView == null) {
-						convertView = _inflater.inflate(R.layout.row_filter_boolean, null);
-					}
-					CheckedTextView checkBox = (CheckedTextView) convertView.findViewById(R.id.boolean_header);
-					checkBox.setText(filter.getName());
-	    			checkBox.setChecked(((BooleanFilter)filter).getValue());
-					break;
-					
-				case Filter.DateFilter:  
-					if (convertView == null) {
-						convertView = _inflater.inflate(R.layout.row_filter_date, null);
-					}
-					TextView dateHeader = (TextView) convertView.findViewById(R.id.date_header);
-		    		TextView dateValue = (TextView) convertView.findViewById(R.id.date_value);
-		    		dateHeader.setText(filter.getName());
-		    		dateValue.setText(value == null ? notSet : ToString.date((Date)value));
-					break;
-					
-				case Filter.DatePeriodFilter:  
-					if (convertView == null) {
-						convertView = _inflater.inflate(R.layout.row_filter_date_period, null);
-					}
-					TextView periodHeader = (TextView) convertView.findViewById(R.id.period_header);
-		    		TextView periodValue = (TextView) convertView.findViewById(R.id.period_value);
-		    		periodHeader.setText(filter.getName());
-		    		Pair<Date, Date> dates = (Pair<Date, Date>)value;
-		    		String valString = notSet;
-					if (dates.first != null && dates.second != null) {
-						valString = getString(R.string.dates_period, ToString.date(dates.first), ToString.date(dates.second));
-					}
-					periodValue.setText(valString);
-					break;
-					
-				case Filter.EnumerableFilter:  
-					if (convertView == null) {
-						convertView = _inflater.inflate(R.layout.row_filter_enumerable, null);
-					}
-					TextView enumHeader = (TextView) convertView.findViewById(R.id.enum_header);
-		    		TextView enumValue = (TextView) convertView.findViewById(R.id.enum_value);
-		    		enumHeader.setText(filter.getName());
-		    		enumValue.setText(value == null ? notSet : value.toString());
-					break;
-			}
-			return convertView;
-		 */
 	}
 
 }

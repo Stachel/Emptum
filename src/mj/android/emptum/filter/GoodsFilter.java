@@ -1,6 +1,5 @@
 package mj.android.emptum.filter;
 
-import mj.android.emptum.filter.logic.Filter;
 import android.content.Context;
 
 public class GoodsFilter {

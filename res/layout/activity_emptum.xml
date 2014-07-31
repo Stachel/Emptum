@@ -13,10 +13,8 @@
 	    android:id="@+id/menu"
 	    android:layout_width="240dp"
 	    android:layout_height="match_parent" 
-	    android:layout_gravity="start"
-	    android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111" />
+	    android:layout_gravity="right"
+        android:background="#aaaaaa" />
 </android.support.v4.widget.DrawerLayout>
 
 

@@ -6,7 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.UUID;
 
 import android.content.Context;
@@ -14,7 +15,7 @@ import android.content.Context;
 public class GoodsList {
 	
 	private static GoodsList _instance;
-	private ArrayList<Item> _list;
+	private HashMap<UUID, Item> _list;
 	private Context _context;
 	
 	private static final String FILENAME = "emptum.data";
@@ -31,23 +32,22 @@ public class GoodsList {
 		try {
 			readData();
 		} catch (Exception e) {
-			_list = new ArrayList<Item>();
+			_list = new HashMap<UUID, Item>();
 		}		
 	}
 
 	public void add(String name) {
-		_list.add(new Item(name));
+		UUID key = UUID.randomUUID();
+		_list.put(key, new Item(name));
 	}
 	
 	public void add(Item item) {
-		_list.add(item);
+		UUID key = UUID.randomUUID();
+		_list.put(key, item);
 	}
 	
-	public void remove(UUID id) {
-		Item item = getItem(id);
-		if (item != null) {
-			_list.remove(item);
-		}
+	public void remove(UUID key) {
+		_list.remove(key);
 	}
 		
 	public void saveData() throws IOException {
@@ -62,28 +62,31 @@ public class GoodsList {
 	private void readData() throws FileNotFoundException, IOException, ClassNotFoundException  {
 		FileInputStream fis = _context.openFileInput(FILENAME);
 		ObjectInputStream ois = new ObjectInputStream(fis);
-		_list = (ArrayList<Item>)ois.readObject();
+		_list = (HashMap<UUID, Item>)ois.readObject();
 	}
 	
 	public boolean deleteFile() {
 		return _context.deleteFile(FILENAME);
 	}
 	
-	//@SuppressWarnings("unchecked")
-	//synchronized
-	public  ArrayList<Item> getGoodsList() {
-		//ArrayList<Item> list = (ArrayList<Item>) _list.clone();
-		//Collections.reverse(list);
-		//return list;
+	public  HashMap<UUID, Item> getGoodsList() {
 		return _list;
 	}
 	
-	public Item getItem(UUID id) {
-		for (Item item : _list) {
-			if (item.getID().equals(id)) {
-				return item;
+	public Item getItem(UUID key) {
+		return _list.get(key);
+	}
+
+	public void removeAll() {
+		_list.clear();
+	}
+	
+	public void removeBought() {
+		for(Iterator<HashMap.Entry<UUID, Item>> it = _list.entrySet().iterator(); it.hasNext(); ) {
+			HashMap.Entry<UUID, Item> entry = it.next();
+			if(entry.getValue().isMarked()) {
+				it.remove();
 			}
 		}
-		return null;
 	}
 }
