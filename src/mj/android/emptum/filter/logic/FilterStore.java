@@ -5,10 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class FilterStore {
-
-	private FilterStore() {
-	}
-
+	
 	public static void write (Context ctx, String key, Boolean value) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 		SharedPreferences.Editor editor = prefs.edit();
@@ -29,7 +26,6 @@ public class FilterStore {
 		editor.putInt(key, value);
 		editor.commit();
 	}
-	
 	
 	public static int readInteger (Context ctx, String key) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);

@@ -19,7 +19,6 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -75,23 +74,14 @@ public class GoodsListAdapter extends BaseAdapter {
 		}
 	}
 	
-	ArrayList<Entry> _list;
-	protected Context _context;
-	private OnItemStateChangedListener _listenerItemStateChanged;
+	private ArrayList<Entry> _list;
+	private Context _context;
 			
-	public interface OnItemStateChangedListener {
-		public void itemStateChanged(UUID id);
-	}
-	
 	public GoodsListAdapter (Context ctx) {
 		_context = ctx;
 		generateGoodsList();
 	}
 	
-	public void setOnItemStateChangedListener (OnItemStateChangedListener listener) {
-		_listenerItemStateChanged = listener;
-	}
-
 	protected void generateGoodsList() {
 		if (_list == null) {
 			_list = new ArrayList<Entry>();
@@ -133,7 +123,7 @@ public class GoodsListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Entry getItem(int position) {
 		return _list.get(position);
 	}
 
@@ -160,17 +150,8 @@ public class GoodsListAdapter extends BaseAdapter {
 		icon.setBackgroundResource(getDrawable(isMarked));
 		setStrikeOutText(title, isMarked);
 		
-		icon.setTag(_list.get(position).getKey());
-		
-		icon.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (_listenerItemStateChanged != null) {
-					UUID key = (UUID) v.getTag();
-					_listenerItemStateChanged.itemStateChanged(key);
-				}
-			}
-		});
+		convertView.setTag(R.id.key_uuid, _list.get(position).getKey());
+		convertView.setTag(R.id.key_name, _list.get(position).getItem().getName());
 		
 		return convertView;
 	}
@@ -186,7 +167,7 @@ public class GoodsListAdapter extends BaseAdapter {
 	}
 	
 	protected int getDrawable(boolean isMarked) {
-		return isMarked ? R.drawable.check_on : R.drawable.check_off;
+		return isMarked ? R.drawable.check_off : R.drawable.check_on;
 	}
 	
 	@Override

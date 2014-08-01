@@ -1,8 +1,11 @@
 package mj.android.emptum.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Item {
+public class Item implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private Date _date;
 	private String _name;
 	private boolean _marked;
@@ -25,11 +28,11 @@ public class Item {
 		return _marked;
 	}
 	
-	public void setMarked(boolean marked) {
-		_marked = marked;
+	void switchMarked() { // not public!
+		_marked = !_marked;
 	}
 
-	public void switchMarked() {
-		_marked = !_marked;
+	void rename(String name) { // not public!
+		_name = name;
 	}
 }

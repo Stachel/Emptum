@@ -1,5 +1,6 @@
 package mj.android.emptum.menu;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import mj.android.emptum.R;
@@ -34,7 +35,10 @@ public class BooleanMenuItem implements MenuItem {
 	}
 
 	@Override
-	public void fillView(View convertView) {
+	public View fillView(LayoutInflater inflater, View convertView) {
+		if (convertView == null) {
+			convertView = (View) inflater.inflate(R.layout.item_menu_boolean, null);
+		}
 		TextView text = (TextView)convertView.findViewById(android.R.id.text1);
 		StringBuilder ss = new StringBuilder();
 		if (isChecked()) {
@@ -42,10 +46,7 @@ public class BooleanMenuItem implements MenuItem {
 		}
 		ss.append(getName());
 		text.setText(ss.toString()); 
-	}
-
-	@Override
-	public int getLayoutResourceID() {
-		return R.layout.item_menu_boolean;
+		
+		return convertView;
 	}
 }

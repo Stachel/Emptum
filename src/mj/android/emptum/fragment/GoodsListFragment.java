@@ -5,9 +5,10 @@ import java.util.UUID;
 
 import mj.android.emptum.R;
 import mj.android.emptum.adapter.GoodsListAdapter;
-import mj.android.emptum.adapter.GoodsListAdapter.OnItemStateChangedListener;
 import mj.android.emptum.data.GoodsList;
-import mj.android.emptum.data.Item;
+import mj.android.emptum.fragment.dialog.ConfirmItemDialogFragment;
+import mj.android.emptum.fragment.dialog.EditDialogFragment;
+import mj.android.emptum.service.IntentKey;
 import mj.android.emptum.service.OnTouchRightDrawableListener;
 import android.app.Activity;
 import android.app.Fragment;
@@ -21,6 +22,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -35,18 +39,9 @@ public class GoodsListFragment extends Fragment {
 	
 	private GoodsListAdapter _adapter;
 	
-	private static final int REQUEST_CODE = 0;
-	
-	OnItemStateChangedListener _listenerStateChanged = new OnItemStateChangedListener() {
-		@Override
-		public void itemStateChanged(UUID id) {
-			Item item = _goodsList.getItem(id);
-			if (item != null) {
-				item.switchMarked();
-				_adapter.notifyDataSetChanged();
-			}
-		}
-	};
+	private static final int REQUEST_VOICE_CODE = 0;
+	private static final int REQUEST_EDIT_CODE = 1;
+	private static final int REQUEST_REMOVE_CODE = 2;
 	
 	public static GoodsListFragment newInstance() {
 		GoodsListFragment fragment = new GoodsListFragment();
@@ -54,7 +49,13 @@ public class GoodsListFragment extends Fragment {
 	}
 
 	public GoodsListFragment() {
-		_goodsList = GoodsList.getInstance(getActivity());
+		
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		_goodsList = GoodsList.getInstance(activity);
 	}
 	
 	@Override
@@ -64,9 +65,29 @@ public class GoodsListFragment extends Fragment {
 		_edit = (EditText)rootView.findViewById(R.id.edit_text);
 		
 		_adapter = new GoodsListAdapter(getActivity());
-		_adapter.setOnItemStateChangedListener(_listenerStateChanged);
 		_list.setAdapter(_adapter);
-			
+		
+		_list.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				UUID key = (UUID) view.getTag(R.id.key_uuid);
+				String name = (String) view.getTag(R.id.key_name);
+				EditDialogFragment editFragment = EditDialogFragment.getInstance(key, name);
+				editFragment.setTargetFragment(GoodsListFragment.this, REQUEST_EDIT_CODE);
+				editFragment.show(getFragmentManager(), "EditDialogFragment");
+				return true;
+			}
+		});
+		
+		_list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				UUID key = (UUID) view.getTag(R.id.key_uuid);
+				_goodsList.switchItemMarked(key);
+				_adapter.notifyDataSetChanged();
+			}
+		});
+		
 		_edit.setOnKeyListener(new OnKeyListener() {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -109,23 +130,51 @@ public class GoodsListFragment extends Fragment {
 		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_hint));
-		startActivityForResult(intent, REQUEST_CODE);
+		startActivityForResult(intent, REQUEST_VOICE_CODE);
 	}
  
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-			ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			if (matches.size() > 0) {
-				String item = matches.get(0);
-				_edit.setText(item);
-			} else {
-				Toast.makeText(getActivity(), getString(R.string.voice_not_recognized), Toast.LENGTH_SHORT).show();
-			}
-        }
+		switch (requestCode) {
+			case REQUEST_VOICE_CODE:
+				if (resultCode == Activity.RESULT_OK) {
+					ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+					if (matches.size() > 0) {
+						String item = matches.get(0);
+						_edit.setText(item);
+					} else {
+						Toast.makeText(getActivity(), getString(R.string.voice_not_recognized), Toast.LENGTH_SHORT).show();
+					}
+				}
+				break;
+				
+			case REQUEST_EDIT_CODE:
+				UUID key = UUID.fromString(data.getStringExtra(IntentKey.UUID));
+				String name = data.getStringExtra(IntentKey.NAME);
+				if (resultCode == Activity.RESULT_OK) {
+					_goodsList.renameItem(key, name);
+					_adapter.notifyDataSetChanged();
+				}		
+				if (resultCode == Activity.RESULT_FIRST_USER) {
+					String message = getString(R.string.dialog_confirm_remove_item, name);
+					ConfirmItemDialogFragment confirmFragment = ConfirmItemDialogFragment.getInstance(message, key);
+					confirmFragment.setTargetFragment(GoodsListFragment.this, REQUEST_REMOVE_CODE);
+					confirmFragment.show(getFragmentManager(), "ConfirmItemDialogFragment");
+				}
+				break;
+			
+			case REQUEST_REMOVE_CODE:
+				if (resultCode == Activity.RESULT_OK) {
+					UUID k = UUID.fromString(data.getStringExtra(IntentKey.UUID));
+					_goodsList.remove(k);
+					_adapter.notifyDataSetChanged();
+				}
+				break;
+		}
+
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+	
 	public void notifyListChanged() {
 		_adapter.notifyDataSetChanged();
 	}

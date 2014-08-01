@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import mj.android.emptum.menu.GroupMenuItem;
 import mj.android.emptum.menu.MenuItem;
 import android.content.Context;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,11 @@ import android.widget.BaseAdapter;
 
 public class MenuListAdapter extends BaseAdapter {
 	
-	private Context _ctx;
+	private Context _context;
 	private ArrayList<MenuItem> _items;
 
 	public MenuListAdapter(Context ctx, ArrayList<MenuItem> items) {
-		_ctx = ctx;
+		_context = ctx;
 		_items = items;
 	}
 
@@ -53,18 +52,7 @@ public class MenuListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final Context contextThemeWrapper = new ContextThemeWrapper(_ctx, android.R.style.Theme_Holo);
-		LayoutInflater inflater = LayoutInflater.from(_ctx);
-		inflater = inflater.cloneInContext(contextThemeWrapper);
-		
-		MenuItem item = getItem(position);
-		
-		if (convertView == null) {
-			convertView = (View) inflater.inflate(item.getLayoutResourceID(), null);
-		}
-		item.fillView(convertView);
-
-		return convertView;
+		LayoutInflater inflater = LayoutInflater.from(_context);
+		return getItem(position).fillView(inflater, convertView);
 	}
-
 }
