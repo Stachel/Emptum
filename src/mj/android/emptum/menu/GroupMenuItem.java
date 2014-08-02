@@ -3,11 +3,8 @@ package mj.android.emptum.menu;
 import java.util.ArrayList;
 
 import mj.android.emptum.R;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
-public class GroupMenuItem implements MenuItem {
+public class GroupMenuItem extends MenuItem {
 	
 	private String _name;
 	ArrayList<MenuItem> _childs;
@@ -41,13 +38,7 @@ public class GroupMenuItem implements MenuItem {
 	}
 
 	@Override
-	public View fillView(LayoutInflater inflater, View convertView) {
-		if (convertView == null) {
-			convertView = (View) inflater.inflate(R.layout.item_menu_group, null);
-		}
-		TextView text = (TextView)convertView.findViewById(android.R.id.text1);
-		text.setText(getName());
-		
-		return convertView;
+	public int getLayoutResource() {
+		return R.layout.item_menu_group;
 	}
 }

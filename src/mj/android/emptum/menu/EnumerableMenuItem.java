@@ -1,13 +1,13 @@
 package mj.android.emptum.menu;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 import mj.android.emptum.R;
 import mj.android.emptum.filter.logic.EnumerableFilter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckedTextView;
 
 
-public class EnumerableMenuItem implements MenuItem {
+public class EnumerableMenuItem extends MenuItem {
 	private String _name;
 	private EnumerableFilter _filter; 
 	private int _id;
@@ -39,17 +39,14 @@ public class EnumerableMenuItem implements MenuItem {
 
 	@Override
 	public View fillView(LayoutInflater inflater, View convertView) {
-		if (convertView == null) {
-			convertView = (View) inflater.inflate(R.layout.item_menu_enum, null);
-		}
-		TextView text = (TextView)convertView.findViewById(android.R.id.text1);
-		StringBuilder str = new StringBuilder();
-		if (isChecked()) {
-			str.append(" > ");
-		}
-		str.append(getName());
-		text.setText(str.toString());
-		
+		convertView = super.fillView(inflater, convertView);
+		CheckedTextView text = (CheckedTextView)convertView.findViewById(android.R.id.text1);
+		text.setChecked(isChecked());
 		return convertView;
+	}
+
+	@Override
+	public int getLayoutResource() {
+		return R.layout.item_menu_enum;
 	}
 }

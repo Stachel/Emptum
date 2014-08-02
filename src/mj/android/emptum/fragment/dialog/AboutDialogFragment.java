@@ -36,7 +36,7 @@ public class AboutDialogFragment  extends DialogFragment {
 			version.setVisibility(View.GONE);
 		}
 		mail.setText(R.string.dialog_about_mail);
-		
+
 		builder.setView(v);
 		builder.setTitle(R.string.menu_about);
 		builder.setPositiveButton(R.string.dialog_btn_ok, null);

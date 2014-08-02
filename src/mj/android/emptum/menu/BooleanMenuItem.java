@@ -2,11 +2,12 @@ package mj.android.emptum.menu;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 import mj.android.emptum.R;
 import mj.android.emptum.filter.logic.BooleanFilter;
 
-public class BooleanMenuItem implements MenuItem {
+public class BooleanMenuItem extends MenuItem {
 	private String _name;
 	private BooleanFilter _filter;
 	
@@ -36,17 +37,14 @@ public class BooleanMenuItem implements MenuItem {
 
 	@Override
 	public View fillView(LayoutInflater inflater, View convertView) {
-		if (convertView == null) {
-			convertView = (View) inflater.inflate(R.layout.item_menu_boolean, null);
-		}
-		TextView text = (TextView)convertView.findViewById(android.R.id.text1);
-		StringBuilder ss = new StringBuilder();
-		if (isChecked()) {
-			ss.append(" > ");
-		}
-		ss.append(getName());
-		text.setText(ss.toString()); 
-		
+		convertView = super.fillView(inflater, convertView);
+		CheckedTextView text = (CheckedTextView)convertView.findViewById(android.R.id.text1);
+		text.setChecked(isChecked());
 		return convertView;
+	}
+
+	@Override
+	public int getLayoutResource() {
+		return R.layout.item_menu_boolean;
 	}
 }

@@ -1,17 +1,30 @@
 package mj.android.emptum.menu;
 
+import mj.android.emptum.R;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
-public interface MenuItem {
+public abstract class MenuItem {
 	
 	public int TYPE_GROUP = 0;
 	public int TYPE_BOOLEAN = 1;
 	public int TYPE_ENUMERABLE = 2;
 	public int TYPE_ACTION = 3;
 	
-	public String getName();
-	public int getType();
-	public void onItemClick();
-	public View fillView(LayoutInflater inflater, View convertView);
+	public abstract String getName();
+	public abstract int getType();
+	public abstract void onItemClick();
+	public abstract int getLayoutResource();
+	
+	public View fillView(LayoutInflater inflater, View convertView) {
+		if (convertView == null) {
+			convertView = (View) inflater.inflate(getLayoutResource(), null);
+		}
+		
+		TextView text = (TextView)convertView.findViewById(android.R.id.text1);
+		text.setText(getName());
+		
+		return convertView;
+	}
 }
