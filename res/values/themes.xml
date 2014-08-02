@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<style name="Orangetheme" parent="android:Theme.Holo.Light.DarkActionBar">
+		<item name="android:actionBarStyle">@style/ActionBar.Solid.Orangetheme</item>
+		<item name="android:actionBarItemBackground">@drawable/selectable_background_orangetheme</item>
+		<item name="android:editTextBackground">@drawable/orangetheme_edit_text_holo_light</item>
+		<item name="android:textColorHighlight">#99ff8a00</item>
+		<item name="android:textSelectHandleLeft">@drawable/orangetheme_text_select_handle_left</item>
+		<item name="android:textSelectHandleRight">@drawable/orangetheme_text_select_handle_right</item>
+		<item name="android:textSelectHandle">@drawable/orangetheme_text_select_handle_middle</item>
+		<item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewOrangetheme</item>
+		<item name="android:listChoiceIndicatorMultiple">@drawable/orangetheme_btn_check_holo_light</item>
+		<item name="android:listChoiceIndicatorSingle">@drawable/orangetheme_btn_radio_holo_light</item>
+		<item name="android:buttonStyle">@style/ButtonOrangetheme</item>
+		<item name="android:imageButtonStyle">@style/ImageButtonOrangetheme</item>
+		<item name="android:listChoiceBackgroundIndicator">@drawable/orangetheme_list_selector_holo_light</item>
+		<item name="android:activatedBackgroundIndicator">@drawable/orangetheme_activated_background_holo_light</item>
+		<item name="android:fastScrollThumbDrawable">@drawable/orangetheme_fastscroll_thumb_holo</item>
+	</style>
+	
+	<style name="ActionBar.Solid.Orangetheme" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+		<item name="android:background">@drawable/ab_solid_orangetheme</item>
+		<item name="android:backgroundSplit">@drawable/ab_bottom_solid_orangetheme</item>
+	</style>
+</resources>

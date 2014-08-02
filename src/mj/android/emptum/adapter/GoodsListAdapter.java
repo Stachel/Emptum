@@ -167,7 +167,7 @@ public class GoodsListAdapter extends BaseAdapter {
 	}
 	
 	protected int getDrawable(boolean isMarked) {
-		return isMarked ? R.drawable.check_off : R.drawable.check_on;
+		return isMarked ? R.drawable.orangetheme_btn_check_on_disabled_holo_light : R.drawable.orangetheme_btn_check_off_disabled_focused_holo_light;
 	}
 	
 	@Override

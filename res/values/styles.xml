@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="AutoCompleteTextViewOrangetheme" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+		<item name="android:dropDownSelector">@drawable/orangetheme_list_selector_holo_light</item>
+		<item name="android:background">@drawable/orangetheme_edit_text_holo_light</item>
+	</style>
+	
+	<style name="ButtonOrangetheme" parent="android:Widget.Holo.Light.Button">
+		<item name="android:background">@drawable/orangetheme_btn_default_holo_light</item>
+	</style>
+	
+	<style name="ImageButtonOrangetheme" parent="android:Widget.Holo.Light.ImageButton">
+		<item name="android:background">@drawable/orangetheme_btn_default_holo_light</item>
+	</style>
+</resources>
