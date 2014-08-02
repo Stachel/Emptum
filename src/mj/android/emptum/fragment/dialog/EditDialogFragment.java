@@ -13,9 +13,12 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EditDialogFragment extends DialogFragment implements OnClickListener {
 	
@@ -43,13 +46,16 @@ public class EditDialogFragment extends DialogFragment implements OnClickListene
 		Bundle args = getArguments();
 		_key = UUID.fromString(args.getString(IntentKey.UUID));
 		_text = args.getString(IntentKey.NAME);
-
-		_edit = new EditText(getActivity());
-		_edit.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+		
+		LayoutInflater inflater = getActivity().getLayoutInflater();
+		View v = inflater.inflate(R.layout.dialog_edit, null);
+		TextView dialogTitle = (TextView)v.findViewById(R.id.dialogTitle);
+		_edit = (EditText)v.findViewById(R.id.edit);
+		
+		dialogTitle.setText(R.string.dialog_edit);
 		_edit.setText(_text);
-		_edit.setSingleLine();
-		builder.setView(_edit);
-		builder.setTitle(R.string.dialog_edit);
+
+		builder.setView(v);
 
 		builder.setPositiveButton(R.string.dialog_btn_save, this);
 		builder.setNegativeButton(R.string.dialog_btn_cancel, this);

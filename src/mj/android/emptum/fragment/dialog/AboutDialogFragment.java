@@ -26,8 +26,11 @@ public class AboutDialogFragment  extends DialogFragment {
 		
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		View v = inflater.inflate(R.layout.dialog_about, null);
+		TextView dialogTitle = (TextView)v.findViewById(R.id.dialogTitle);
 		TextView version = (TextView)v.findViewById(R.id.version);
 		TextView mail = (TextView)v.findViewById(R.id.mail);
+		
+		dialogTitle.setText(R.string.menu_about);
 		
 		String ver = getAppVersion(); 
 		if (ver != null) {
@@ -38,8 +41,9 @@ public class AboutDialogFragment  extends DialogFragment {
 		mail.setText(R.string.dialog_about_mail);
 
 		builder.setView(v);
-		builder.setTitle(R.string.menu_about);
+
 		builder.setPositiveButton(R.string.dialog_btn_ok, null);
+		
 		return builder.create();
 	}
 	
