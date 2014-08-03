@@ -1,11 +1,10 @@
 package mj.android.emptum.menu;
 
+import mj.android.emptum.R;
+import mj.android.emptum.filter.logic.BooleanFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckedTextView;
-import android.widget.TextView;
-import mj.android.emptum.R;
-import mj.android.emptum.filter.logic.BooleanFilter;
 
 public class BooleanMenuItem extends MenuItem {
 	private String _name;

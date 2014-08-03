@@ -1,9 +1,6 @@
 package mj.android.emptum.menu;
 
 import mj.android.emptum.R;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 public class ActionMenuItem extends MenuItem {
 	public interface OnActionItemClickListener {

@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,7 +47,7 @@ public class EditDialogFragment extends DialogFragment implements OnClickListene
 		_text = args.getString(IntentKey.NAME);
 		
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		View v = inflater.inflate(R.layout.dialog_edit, null);
+		View v = inflater.inflate(R.layout.dialog_about, null);
 		TextView dialogTitle = (TextView)v.findViewById(R.id.dialogTitle);
 		_edit = (EditText)v.findViewById(R.id.edit);
 		

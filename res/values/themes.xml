@@ -19,7 +19,7 @@
 	</style>
 	
 	<style name="ActionBar.Solid.Orangetheme" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-		<item name="android:background">@drawable/a_ab_solid_orangetheme</item>
-		<item name="android:backgroundSplit">@drawable/a_ab_bottom_solid_orangetheme</item>
+		<item name="android:background">@drawable/ab_solid_orangetheme</item>
+		<item name="android:backgroundSplit">@drawable/ab_bottom_solid_orangetheme</item>
 	</style>
 </resources>
