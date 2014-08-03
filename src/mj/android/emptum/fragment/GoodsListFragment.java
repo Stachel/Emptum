@@ -142,8 +142,6 @@ public class GoodsListFragment extends Fragment {
 					if (matches.size() > 0) {
 						String item = matches.get(0);
 						_edit.setText(item);
-					} else {
-						Toast.makeText(getActivity(), getString(R.string.voice_not_recognized), Toast.LENGTH_SHORT).show();
 					}
 				}
 				break;

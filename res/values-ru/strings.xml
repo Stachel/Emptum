@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Emptum</string>
+    
+    <!-- GoodsListFragment -->
+    <string name="edit_new_hint">А еще мне надо&#8230;</string>
+    <string name="ok">Ок</string>
+    <string name="voice_hint">Произнесите название</string>
+
+	<!-- MenuListFragment -->
+    <string name="menu_group_sorting">Сортировка</string>
+    <string name="menu_group_visible">Фильтр</string>
+    <string name="menu_group_other">Другое</string>
+    
+    <string name="menu_sort_alphabet">по алфавиту</string>
+    <string name="menu_sort_date">в порядке добавления</string>
+    <string name="menu_visible_all">Все</string>
+    <string name="menu_visible_active">Осталось купить</string>
+    <string name="menu_visible_bought">Уже купленное</string>
+    <string name="menu_shifing">Купленное внизу списка</string>
+    <string name="menu_delete_all">Удалить все</string>
+    <string name="menu_delete_bought">Удалить купленное</string>
+    <string name="menu_about">О программе</string>
+    
+    <!-- Menu -->
+    <string name="action_filter">Настройка списка</string>
+    
+    <!-- Dialogs -->
+    <string name="dialog_edit">Редактирование</string>
+    <string name="dialog_btn_ok">Ок</string>
+    <string name="dialog_btn_save">Сохранить</string>
+    <string name="dialog_btn_cancel">Отменить</string>
+    <string name="dialog_btn_remove">Удалить</string>
+    <string name="dialog_confirm_remove_all">Удалить все товары?</string>
+    <string name="dialog_confirm_remove_bought">Удалить уже купленные товары?</string>
+    <string name="dialog_confirm_remove_item" formatted="false">Удалить \'%s\'?</string>
+    <string name="dialog_about_version" formatted="false">Версия: %s</string>
+	<string name="dialog_about_mail">RinaStachel@gmail.com</string>
+</resources>

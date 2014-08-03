@@ -4,38 +4,37 @@
     <string name="app_name">Emptum</string>
     
     <!-- GoodsListFragment -->
-    <string name="edit_new_hint">А еще мне надо&#8230;</string>
+    <string name="edit_new_hint">Need to buy</string>
     <string name="ok">Ок</string>
-    <string name="voice_hint">Произнесите название</string>
-    <string name="voice_not_recognized">Не удалось распознать текст</string>
+    <string name="voice_hint">Speak now</string>
 
 	<!-- MenuListFragment -->
-    <string name="menu_group_sorting">Сортировка</string>
-    <string name="menu_group_visible">Фильтр</string>
-    <string name="menu_group_other">Другое</string>
+    <string name="menu_group_sorting">Sort</string>
+    <string name="menu_group_visible">Filter</string>
+    <string name="menu_group_other">Action</string>
     
-    <string name="menu_sort_alphabet">по алфавиту</string>
-    <string name="menu_sort_date">в порядке добавления</string>
-    <string name="menu_visible_all">Все</string>
-    <string name="menu_visible_active">Осталось купить</string>
-    <string name="menu_visible_bought">Уже купленное</string>
-    <string name="menu_shifing">Купленное внизу списка</string>
-    <string name="menu_delete_all">Удалить все</string>
-    <string name="menu_delete_bought">Удалить купленное</string>
-    <string name="menu_about">О программе</string>
+    <string name="menu_sort_alphabet">by alphabet</string>
+    <string name="menu_sort_date">by time</string>
+    <string name="menu_visible_all">all</string>
+    <string name="menu_visible_active">need to buy</string>
+    <string name="menu_visible_bought">bought items</string>
+    <string name="menu_shifing">Move bought to end</string>
+    <string name="menu_delete_all">Clear all</string>
+    <string name="menu_delete_bought">Clear selected</string>
+    <string name="menu_about">About</string>
     
     <!-- Menu -->
-    <string name="action_filter">Настройка списка</string>
+    <string name="action_filter">Settings</string>
     
     <!-- Dialogs -->
-    <string name="dialog_edit">Редактирование</string>
-    <string name="dialog_btn_ok">Ок</string>
-    <string name="dialog_btn_save">Сохранить</string>
-    <string name="dialog_btn_cancel">Отменить</string>
-    <string name="dialog_btn_remove">Удалить</string>
-    <string name="dialog_confirm_remove_all">Удалить все товары?</string>
-    <string name="dialog_confirm_remove_bought">Удалить уже купленные товары?</string>
-    <string name="dialog_confirm_remove_item" formatted="false">Удалить \'%s\'?</string>
-    <string name="dialog_about_version" formatted="false">Версия: %s</string>
+    <string name="dialog_edit">Edit</string>
+    <string name="dialog_btn_ok">Ok</string>
+    <string name="dialog_btn_save">Save</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_remove">Delete</string>
+    <string name="dialog_confirm_remove_all">Delete all items?</string>
+    <string name="dialog_confirm_remove_bought">Delete bought items?</string>
+    <string name="dialog_confirm_remove_item" formatted="false">Delete \'%s\'?</string>
+    <string name="dialog_about_version" formatted="false">Version: %s</string>
 	<string name="dialog_about_mail">RinaStachel@gmail.com</string>
 </resources>
