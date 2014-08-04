@@ -47,7 +47,7 @@ public class EditDialogFragment extends DialogFragment implements OnClickListene
 		_text = args.getString(IntentKey.NAME);
 		
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		View v = inflater.inflate(R.layout.dialog_about, null);
+		View v = inflater.inflate(R.layout.dialog_edit, null);
 		TextView dialogTitle = (TextView)v.findViewById(R.id.dialogTitle);
 		_edit = (EditText)v.findViewById(R.id.edit);
 		
