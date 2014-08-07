@@ -4,7 +4,7 @@
     <string name="app_name">Emptum</string>
     
     <!-- GoodsListFragment -->
-    <string name="edit_new_hint">Need to buy</string>
+    <string name="edit_new_hint">Also need to buy</string>
     <string name="ok">Ок</string>
     <string name="voice_hint">Speak now</string>
 
@@ -13,12 +13,12 @@
     <string name="menu_group_visible">Filter</string>
     <string name="menu_group_other">Action</string>
     
-    <string name="menu_sort_alphabet">by alphabet</string>
+    <string name="menu_sort_alphabet">alphabetically</string>
     <string name="menu_sort_date">by time</string>
     <string name="menu_visible_all">all</string>
     <string name="menu_visible_active">need to buy</string>
     <string name="menu_visible_bought">bought items</string>
-    <string name="menu_shifing">Move bought to end</string>
+    <string name="menu_shifing">Move bought items to end</string>
     <string name="menu_delete_all">Clear all</string>
     <string name="menu_delete_bought">Clear selected</string>
     <string name="menu_about">About</string>
@@ -28,13 +28,13 @@
     
     <!-- Dialogs -->
     <string name="dialog_edit">Edit</string>
-    <string name="dialog_btn_ok">Ok</string>
+    <string name="dialog_btn_ok">OK</string>
     <string name="dialog_btn_save">Save</string>
     <string name="dialog_btn_cancel">Cancel</string>
     <string name="dialog_btn_remove">Delete</string>
-    <string name="dialog_confirm_remove_all">Delete all items?</string>
-    <string name="dialog_confirm_remove_bought">Delete bought items?</string>
-    <string name="dialog_confirm_remove_item" formatted="false">Delete \'%s\'?</string>
+    <string name="dialog_confirm_remove_all">Are you sure you want to delete all items?</string>
+    <string name="dialog_confirm_remove_bought">Are you sure you want delete bought items?</string>
+    <string name="dialog_confirm_remove_item" formatted="false">Are you sure you want to delete \'%s\'?</string>
     <string name="dialog_about_version" formatted="false">Version: %s</string>
 	<string name="dialog_about_mail">RinaStachel@gmail.com</string>
 </resources>

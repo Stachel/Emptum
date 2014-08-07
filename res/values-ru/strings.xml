@@ -28,7 +28,7 @@
     
     <!-- Dialogs -->
     <string name="dialog_edit">Редактирование</string>
-    <string name="dialog_btn_ok">Ок</string>
+    <string name="dialog_btn_ok">ОК</string>
     <string name="dialog_btn_save">Сохранить</string>
     <string name="dialog_btn_cancel">Отменить</string>
     <string name="dialog_btn_remove">Удалить</string>
