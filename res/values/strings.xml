@@ -7,6 +7,7 @@
     <string name="edit_new_hint">Also need to buy</string>
     <string name="ok">Ок</string>
     <string name="voice_hint">Speak now</string>
+    <string name="voice_recognition_not_installed">In order to activate speech recognition you must install \"Google Voice Search\"</string>
 
 	<!-- MenuListFragment -->
     <string name="menu_group_sorting">Sort</string>

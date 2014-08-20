@@ -7,6 +7,7 @@
     <string name="edit_new_hint">А еще мне надо&#8230;</string>
     <string name="ok">Ок</string>
     <string name="voice_hint">Произнесите название</string>
+    <string name="voice_recognition_not_installed">Для распознавания речи необходимо установить приложение \"Google Voice Search\"</string>
 
 	<!-- MenuListFragment -->
     <string name="menu_group_sorting">Сортировка</string>

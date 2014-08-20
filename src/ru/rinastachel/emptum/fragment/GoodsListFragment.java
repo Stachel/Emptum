@@ -3,7 +3,6 @@ package ru.rinastachel.emptum.fragment;
 import java.util.ArrayList;
 import java.util.UUID;
 
-
 import ru.rinastachel.emptum.R;
 import ru.rinastachel.emptum.adapter.GoodsListAdapter;
 import ru.rinastachel.emptum.data.GoodsList;
@@ -13,6 +12,7 @@ import ru.rinastachel.emptum.service.IntentKey;
 import ru.rinastachel.emptum.service.OnTouchRightDrawableListener;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -29,6 +29,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class GoodsListFragment extends Fragment {
 
@@ -101,7 +102,11 @@ public class GoodsListFragment extends Fragment {
 		_edit.setOnTouchListener(new OnTouchRightDrawableListener(_edit) {
 			@Override
 			public boolean onDrawableTouch(MotionEvent event) {
-				startVoiceRecognitionActivity();
+				try {
+					startVoiceRecognitionActivity();
+				} catch (ActivityNotFoundException exp) {
+					Toast.makeText(getActivity(), R.string.voice_recognition_not_installed, Toast.LENGTH_LONG).show();
+				}
 				return true;
 			}
 		});
@@ -126,12 +131,25 @@ public class GoodsListFragment extends Fragment {
 		_adapter.notifyDataSetChanged();
 	}
 
-	private void startVoiceRecognitionActivity() {
+	private void startVoiceRecognitionActivity() throws ActivityNotFoundException  {
 		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_hint));
 		startActivityForResult(intent, REQUEST_VOICE_CODE);
 	}
+	/*
+	private static boolean isSpeechRecognitionActivityPresented(Activity callerActivity) {
+		try {
+			PackageManager pm = callerActivity.getPackageManager();
+			List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+			if (activities.size() != 0) { 
+				return true;
+			}
+		} catch (Exception e) {
+		}
+		return false;
+	}
+	 */
  
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
